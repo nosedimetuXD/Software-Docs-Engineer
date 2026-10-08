@@ -1,0 +1,52 @@
+caso_de_uso:
+  id: "CU-01"
+  nombre: "Iniciar Sesión en el Sistema"
+  breve_descripcion: "Permite a los usuarios autenticarse mediante sus credenciales para acceder a las funciones del software."
+  actor_principal:
+    - "Usuario Registrado"
+  actores_secundarios:
+    - "Servidor de Autenticación OAuth"
+  requisitos_funcionales_asociados:
+    - "RF-01: Autenticación segura de usuarios"
+    - "RF-02: Control de acceso basado en roles (RBAC)"
+  objetivos:
+    - "Garantizar la confidencialidad de la información y validar la identidad del usuario."
+  precondiciones:
+    - "El usuario debe encontrarse previamente registrado y en estado activo."
+    - "El servicio de autenticación debe estar operativo."
+  datos_requeridos:
+    - "Correo electrónico corporativo"
+    - "Contraseña de acceso"
+  flujo_principal:
+    - paso: 1
+      actor: "Usuario"
+      accion: "Ingresa su correo electrónico y contraseña en el formulario de inicio de sesión."
+    - paso: 2
+      actor: "Usuario"
+      accion: "Presiona el botón 'Iniciar Sesión'."
+    - paso: 3
+      actor: "Sistema"
+      accion: "Valida el formato de las credenciales ingresadas."
+    - paso: 4
+      actor: "Sistema"
+      accion: "Verifica las credenciales contra el almacén de identidades cifrado."
+    - paso: 5
+      actor: "Sistema"
+      accion: "Genera el token de sesión (JWT) con los roles asignados."
+    - paso: 6
+      actor: "Sistema"
+      accion: "Redirige al usuario al panel principal correspondiente a su rol."
+  postcondiciones:
+    - "Sesión iniciada satisfactoriamente con token de autenticación válido."
+  flujos_alternativos:
+    - id: "FA-01"
+      condicion: "Credenciales Incorrectas"
+      pasos:
+        - "El sistema notifica que el usuario o la contraseña son incorrectos."
+        - "Se incrementa el contador de intentos fallidos."
+        - "Permanece en la pantalla de inicio de sesión."
+    - id: "FA-02"
+      condicion: "Cuenta Bloqueada por Múltiples Intentos"
+      pasos:
+        - "Si se superan 5 intentos fallidos, el sistema bloquea temporalmente la cuenta."
+        - "Se envía un correo con enlace seguro de desbloqueo."
